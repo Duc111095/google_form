@@ -9,8 +9,8 @@ import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 import org.springframework.stereotype.Service;
 
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 @Service
 public class DatabaseService {

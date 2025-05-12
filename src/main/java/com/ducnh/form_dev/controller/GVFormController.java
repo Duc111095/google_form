@@ -16,9 +16,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,7 +54,7 @@ public class GVFormController {
             String startDate = formData.get("start_date");
             String formId = formData.get("form_id");
             String listTenGV = "";
-            List<String> listGV = Arrays.stream(tenGV.split(", ")).map(s -> databaseService.getTenGVFromMaGV(s.trim())).toList();
+            List<String> listGV = Arrays.stream(tenGV.split(", ")).map(s -> databaseService.getTenGVFromMaGV(s.trim())).collect(Collectors.toList());
             for (String gv : listGV) {
                 listTenGV += (listTenGV == "" ? gv : ", " + gv);
             } 
@@ -66,7 +67,7 @@ public class GVFormController {
             String errors = ex.getMessage();
             sResponsePayload.setMessage("error");
             sResponsePayload.setErrors(errors);
-            return ResponseEntity.status(HttpStatusCode.valueOf(500)).body(sResponsePayload);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(sResponsePayload);
         }   
     }
     
@@ -85,7 +86,7 @@ public class GVFormController {
             String errors = ex.getMessage();
             sResponsePayload.setMessage("error");
             sResponsePayload.setErrors(errors);
-            return ResponseEntity.status(HttpStatusCode.valueOf(500)).body(sResponsePayload);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(sResponsePayload);
         }
     }
 }

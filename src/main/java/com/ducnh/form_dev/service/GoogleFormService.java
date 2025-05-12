@@ -287,7 +287,7 @@ public class GoogleFormService {
         PermissionList list = driveService.permissions().list(formId).setOauthToken(token).execute();
         System.out.println(list);
         System.out.println(formId);
-        if (list.getPermissions().stream().filter((it) -> it.getRole().equals("writer")).findAny().isEmpty()) {
+        if (!list.getPermissions().stream().filter((it) -> it.getRole().equals("writer")).findAny().isPresent()) {
             Permission body = new Permission();
             body.setRole("writer");
             body.setType("user");

@@ -6,6 +6,7 @@ import java.security.GeneralSecurityException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,7 +168,7 @@ public class ResponseFormService {
         } catch (Exception e) {
             Staff staff = new Staff();
             staff.setMaNv(maNv);
-            return List.of(staff);
+            return Arrays.asList(staff);
         }
     }
 }

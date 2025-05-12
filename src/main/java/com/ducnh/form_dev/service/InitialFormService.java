@@ -3,6 +3,7 @@ package com.ducnh.form_dev.service;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,31 +42,31 @@ public class InitialFormService {
         
         requests.add(googleFormService.updateDescriptionForm(formDecription, formId, token));
 
-        requests.add(googleFormService.addRadioItem("1. Anh/Chị đã từng tham dự nội dung đào tạo này trước đây chưa?", List.of(
+        requests.add(googleFormService.addRadioItem("1. Anh/Chị đã từng tham dự nội dung đào tạo này trước đây chưa?", Arrays.asList(
             "Chưa. Tôi chưa bao giờ tham dự",
             "Có. Tôi đã từng tham dự (Ghi rõ khoảng thời gian đã từng tham dự)"
         ), "", true, true, 0, "RADIO", formId, token));
 
-        requests.add(googleFormService.addRadioItem("2. Lý do khiến Anh/Chị tham dự lớp đào tạo này? (Có thể chọn nhiều hơn một đáp án)", List.of(
+        requests.add(googleFormService.addRadioItem("2. Lý do khiến Anh/Chị tham dự lớp đào tạo này? (Có thể chọn nhiều hơn một đáp án)", Arrays.asList(
             "Yêu cầu của Phòng Đào tạo",
             "Quản lý của tôi đề xuất",
             "Chủ đề mà tôi quan tâm"
         ), "", true, true, 1, "CHECKBOX", formId, token));
 
-        requests.add(googleFormService.addMultichoiceGrid("3. Đánh giá về Khâu tổ chức lớp đào tạo (Theo thang điểm từ 1 đến 10)", List.of(
+        requests.add(googleFormService.addMultichoiceGrid("3. Đánh giá về Khâu tổ chức lớp đào tạo (Theo thang điểm từ 1 đến 10)", Arrays.asList(
             "Thông tin hướng dẫn về lớp đào tạo rõ ràng, cụ thể",
             "Tài liệu tham khảo đầy đủ, nội dung hữu ích",
             "Môi trường đào tạo phù hợp, có đầy đủ các trang thiết bị "
         ), 2, true, 10, 1, "RADIO", formId, token));
         
-        requests.add(googleFormService.addMultichoiceGrid("4. Đánh giá về Kỹ năng giảng dạy của giảng viên (Theo thang điểm từ 1 đến 10)", List.of(
+        requests.add(googleFormService.addMultichoiceGrid("4. Đánh giá về Kỹ năng giảng dạy của giảng viên (Theo thang điểm từ 1 đến 10)", Arrays.asList(
             "Kiến thức chuyên môn tốt đối với chủ đề đang chia sẻ",
             "Slide trình chiếu đầy đủ thông tin, thiết kế chuyên nghiệp",
             "Kỹ năng thuyết trình lôi cuốn",
             "Áp dụng các phương pháp giảng dạy tích cực"
         ), 3, true, 10, 1, "RADIO", formId, token));
 
-        requests.add(googleFormService.addMultichoiceGrid("5. Đánh giá về tính hữu ích của nội dung đào tạo? (Theo thang điểm từ 1 đến 10)", List.of(
+        requests.add(googleFormService.addMultichoiceGrid("5. Đánh giá về tính hữu ích của nội dung đào tạo? (Theo thang điểm từ 1 đến 10)", Arrays.asList(
             "Cung cấp kiến thức cần thiết, hữu ích cho công việc",
             "Khả năng áp dụng cao trong công việc thực tế"
         ), 4, true, 10, 1, "RADIO", formId, token));
