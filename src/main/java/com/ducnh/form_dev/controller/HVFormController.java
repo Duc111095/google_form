@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "http://192.168.60.15")
+@CrossOrigin(origins = "https://erp.lienketdachieu.com")
 public class HVFormController {
     @Autowired
     private ResponseFormService responseFormService;

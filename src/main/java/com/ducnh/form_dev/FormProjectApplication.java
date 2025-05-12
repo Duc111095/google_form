@@ -9,6 +9,4 @@ public class FormProjectApplication extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(FormProjectApplication.class, args);
 	}
-
-
 }
