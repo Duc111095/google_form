@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "https://mrc.mitalab.com")
+@CrossOrigin(origins = "https://erp.lienketdachieu.com")
 public class GVFormController {
 
     @Autowired
