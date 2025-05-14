@@ -36,7 +36,7 @@ public class HVFormController {
             resPayload.setData(data);
             resPayload.setMessage("success");
             return ResponseEntity.ok(resPayload);
-        } catch (IOException | GeneralSecurityException | SQLException ex) {
+        } catch (IOException | GeneralSecurityException | SQLException | NullPointerException ex) {
             resPayload.setMessage("error");
             resPayload.setErrors(ex.getMessage());
             return ResponseEntity.internalServerError().body(resPayload);

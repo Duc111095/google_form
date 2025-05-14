@@ -63,7 +63,7 @@ public class GVFormController {
             data.put("form_id", formId);
             sResponsePayload.setData(data);
             return ResponseEntity.ok(sResponsePayload);
-        } catch (IOException | GeneralSecurityException ex) {
+        } catch (IOException | GeneralSecurityException | NullPointerException ex) {
             String errors = ex.getMessage();
             sResponsePayload.setMessage("error");
             sResponsePayload.setErrors(errors);
@@ -82,7 +82,7 @@ public class GVFormController {
             data.put("form_id", formId);
             sResponsePayload.setData(data);
             return ResponseEntity.ok(sResponsePayload);
-        } catch (IOException | GeneralSecurityException ex) {
+        } catch (IOException | GeneralSecurityException | NullPointerException ex) {
             String errors = ex.getMessage();
             sResponsePayload.setMessage("error");
             sResponsePayload.setErrors(errors);
