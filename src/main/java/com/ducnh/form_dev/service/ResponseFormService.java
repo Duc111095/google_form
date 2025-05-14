@@ -22,6 +22,8 @@ import com.ducnh.form_dev.entity.Staff;
 import com.google.api.services.forms.v1.Forms;
 import com.google.api.services.forms.v1.FormsScopes;
 import com.google.api.services.forms.v1.model.Form;
+import com.google.api.services.forms.v1.model.FormResponse;
+import com.google.api.services.forms.v1.model.Item;
 import com.google.api.services.forms.v1.model.ListFormResponsesResponse;
 import com.google.api.services.forms.v1.model.Question;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -98,24 +100,36 @@ public class ResponseFormService {
         ListFormResponsesResponse response = formService.forms().responses().list(formId).setOauthToken(accessToken).execute();
         Form form = formService.forms().get(formId).setOauthToken(accessToken).execute();
         List<Map<String, Object>> result = new ArrayList<>();
-        Map<String, String> questionsMap = new HashMap<>(); // map[câu hỏi] -> id 
-        form.getItems().forEach(item -> {
+        Map<String, String> questionsMap = new HashMap<>(); // map[câu hỏi] -> id
+        Integer tS = 0; 
+        List<Item> formItems = form.getItems();
+        for (int i = 0; i < formItems.size(); i++) {
+            Item item = formItems.get(i);
             String title = item.getTitle();
             if (item.getQuestionGroupItem() != null) {
                 for (Question q : item.getQuestionGroupItem().getQuestions()) {
-                    questionsMap.put( q.getQuestionId(),q.getRowQuestion().getTitle());
+                    questionsMap.put(q.getQuestionId(),q.getRowQuestion().getTitle());
+                    try {
+                        tS += q.getGrading().getPointValue();
+                    } catch (NullPointerException ex) {}
                 }
             } else if (item.getQuestionItem() != null ){
                 Question q = item.getQuestionItem().getQuestion();
-                questionsMap.put(q.getQuestionId(),title);
+                    try {
+                        tS += q.getGrading().getPointValue();
+                    } catch (NullPointerException ex) {}
+                    questionsMap.put(q.getQuestionId(),title);
             } else {
                 questionsMap.put(item.getItemId(), title);
             }
-        });
+        }
         
-        response.getResponses().forEach(res -> {
+        List<FormResponse> formResponses = response.getResponses();
+        for (int i = 0; i < formResponses.size(); i++) {
+            FormResponse res = formResponses.get(i);
+            Map<String, Object> responsesMap = new HashMap<>(); // map[id] -> kết quả
+            responsesMap.put("totalScore", tS == 0 ? 0 : (double) res.getOrDefault("totalScore", 0.0) * 10/ tS);
             res.getAnswers().values().forEach(ans -> {
-                Map<String, Object> responsesMap = new HashMap<>(); // map[id] -> kết quả
                 String questionId = ans.getQuestionId();
                 String questionText = questionsMap.get(questionId);
                 List<Object> answers = new ArrayList<>();
@@ -123,14 +137,16 @@ public class ResponseFormService {
                     answers.add(textAns.getValue());
                 });
                 responsesMap.put(questionText, answers);
-                responsesMap.put("totalScore", (double) res.getOrDefault("totalScore", 0.0));
-                result.add(responsesMap);
             });
+            result.add(responsesMap);
+        }
+        response.getResponses().forEach(res -> {
+            
         });
 
         result.forEach(hv -> {
             for (String k : questionsMap.values()) {
-                if (k.indexOf("Mã nhân viên") >= 0) {
+                if (k != null && k.indexOf("Mã nhân viên") >= 0) {
                     if (hv.get(k) != null) {
                         String maNv = ((List<String>) hv.get(k)).get(0);
                         Staff staff = queryInformationHV(maNv).get(0);
