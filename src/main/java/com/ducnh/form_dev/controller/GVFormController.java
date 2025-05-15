@@ -67,7 +67,7 @@ public class GVFormController {
             String errors = ex.getMessage();
             sResponsePayload.setMessage("error");
             sResponsePayload.setErrors(errors);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(sResponsePayload);
+            return ResponseEntity.ok(sResponsePayload);
         }   
     }
     
@@ -86,7 +86,7 @@ public class GVFormController {
             String errors = ex.getMessage();
             sResponsePayload.setMessage("error");
             sResponsePayload.setErrors(errors);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(sResponsePayload);
+            return ResponseEntity.ok(sResponsePayload);
         }
     }
 }
